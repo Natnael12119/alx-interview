@@ -1,25 +1,26 @@
 #!/usr/bin/node
+
 const request = require('request');
-const API_URL = 'https://swapi-api.hbtn.io/api';
+const filmNum = process.argv[2] + '/';
+const filmURL = 'https://swapi-api.hbtn.io/api/films/';
+// Makes API request, sets async to allow await promise
+request(filmURL + filmNum, async (err, res, body) => {
+  if (err) return console.error(err);
 
-if (process.argv.length > 2) {
-  request(`${API_URL}/films/${process.argv[2]}/`, (err, _, body) => {
-    if (err) {
-      console.log(err);
-    }
-    const charactersURL = JSON.parse(body).characters;
-    const charactersName = charactersURL.map(
-      url => new Promise((resolve, reject) => {
-        request(url, (promiseErr, __, charactersReqBody) => {
-          if (promiseErr) {
-            reject(promiseErr);
-          }
-          resolve(JSON.parse(charactersReqBody).name);
-        });
-      }));
+  // find URLs of each character in the film as a list obj
+  const charURLList = JSON.parse(body).characters;
 
-    Promise.all(charactersName)
-      .then(names => console.log(names.join('\n')))
-      .catch(allErr => console.log(allErr));
-  });
-}
+  // Use URL list to character pages to make new requests
+  // await queues requests until they resolve in order
+  for (const charURL of charURLList) {
+    await new Promise((resolve, reject) => {
+      request(charURL, (err, res, body) => {
+        if (err) return console.error(err);
+
+        // finds each character name and prints in URL order
+        console.log(JSON.parse(body).name);
+        resolve();
+      });
+    });
+  }
+});
