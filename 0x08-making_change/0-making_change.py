@@ -1,17 +1,23 @@
 #!/usr/bin/python3
+'''DSA Challenge
+'''
+
+
 def makeChange(coins, total):
+    '''determine the fewest number of coins needed to meet a given amount total
+    '''
     if total <= 0:
         return 0
-
-    if not coins:
-        return -1
-
-    dp = [total + 1] * (total + 1)
-    dp[0] = 0  # Base case: 0 coins needed to make 0 amount
-
-    # Update the dp array for each coin
-    for coin in coins:
-        for i in range(coin, total + 1):
-            dp[i] = min(dp[i], dp[i - coin] + 1)
-
-    return dp[total] if dp[total] != total + 1 else -1
+    coins_count = 0
+    coin_idx = 0
+    sorted_coins = sorted(coins, reverse=True)
+    n = len(coins)
+    while total > 0:
+        if coin_idx >= n:
+            return -1
+        if total - sorted_coins[coin_idx] >= 0:
+            total -= sorted_coins[coin_idx]
+            coins_count += 1
+        else:
+            coin_idx += 1
+    return coins_count
