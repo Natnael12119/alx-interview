@@ -15,12 +15,9 @@ def makeChange(coins, total):
     # If dp[total] is still greater than total, it means it's not possible to make that amount
     return dp[total] if dp[total] != total + 1 else -1
 
-# Example usage
-if __name__ == "__main__":
-    print(makeChange([1, 2, 25], 37))  # Output: 7
-    print(makeChange([1256, 54, 48, 16, 102], 1453))  # Output: -1
-    print(makeChange([1, 2, 5], 11))  # Expected output: 3
-    print(makeChange([2], 3))         # Expected output: -1
-    print(makeChange([1, 2, 5], 0))   # Expected output: 0
-    print(makeChange([1], 1))         # Expected output: 1
-    print(makeChange([1, 2, 5], 100)) # Expected output: 20
+# Test cases
+print(makeChange([1, 2, 5], 11))  # Expected output: 3
+print(makeChange([2], 3))         # Expected output: -1
+print(makeChange([1, 2, 5], 0))   # Expected output: 0
+print(makeChange([1], 1))         # Expected output: 1
+print(makeChange([1, 2, 5], 100)) # Expected output: 20
