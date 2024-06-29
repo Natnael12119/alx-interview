@@ -1,7 +1,8 @@
+#!/usr/bin/python3
 def makeChange(coins, total):
     if total <= 0:
         return 0
-    
+
     # Initialize the dp array with a value greater than the possible number of coins needed
     dp = [total + 1] * (total + 1)
     dp[0] = 0  # Base case: 0 coins needed to make 0 amount
@@ -15,5 +16,11 @@ def makeChange(coins, total):
     return dp[total] if dp[total] != total + 1 else -1
 
 # Example usage
-print(makeChange([1, 2, 25], 37))  # Output: 7
-print(makeChange([1256, 54, 48, 16, 102], 1453))  # Output: -1
+if __name__ == "__main__":
+    print(makeChange([1, 2, 25], 37))  # Output: 7
+    print(makeChange([1256, 54, 48, 16, 102], 1453))  # Output: -1
+    print(makeChange([1, 2, 5], 11))  # Expected output: 3
+    print(makeChange([2], 3))         # Expected output: -1
+    print(makeChange([1, 2, 5], 0))   # Expected output: 0
+    print(makeChange([1], 1))         # Expected output: 1
+    print(makeChange([1, 2, 5], 100)) # Expected output: 20
