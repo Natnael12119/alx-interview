@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-'''island perimeter
-'''
-
+'''island perimeter'''
 
 def numofIsland(grid, i, j):
     '''Num of islands
@@ -16,7 +14,6 @@ def numofIsland(grid, i, j):
     if (j < len(grid[0])-1 and grid[i][j + 1]):
         count += 1
     return count
-
 
 def island_perimeter(grid):
     '''perimeter function
