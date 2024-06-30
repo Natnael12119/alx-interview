@@ -1,28 +1,25 @@
 #!/usr/bin/python3
-'''island perimeter'''
+"""Island perimeter computing module.
+"""
 
-def numofIsland(grid, i, j):
-    '''Num of islands
-    '''
-    count = 0
-    if (i > 0 and grid[i - 1][j]):
-        count += 1
-    if (j > 0 and grid[i][j - 1]):
-        count += 1
-    if (i < len(grid)-1 and grid[i + 1][j]):
-        count += 1
-    if (j < len(grid[0])-1 and grid[i][j + 1]):
-        count += 1
-    return count
 
 def island_perimeter(grid):
-    '''perimeter function
-    '''
-    C = len(grid[0])
-    R = len(grid)
+    """Computes the perimeter of an island with no lakes.
+    """
     perimeter = 0
-    for i in range(0, R):
-        for j in range(0, C):
-            if (grid[i][j]):
-                perimeter += (4 - numofIsland(grid, i, j))
+    if type(grid) != list:
+        return 0
+    n = len(grid)
+    for i, row in enumerate(grid):
+        m = len(row)
+        for j, cell in enumerate(row):
+            if cell == 0:
+                continue
+            edges = (
+                i == 0 or (len(grid[i - 1]) > j and grid[i - 1][j] == 0),
+                j == m - 1 or (m > j + 1 and row[j + 1] == 0),
+                i == n - 1 or (len(grid[i + 1]) > j and grid[i + 1][j] == 0),
+                j == 0 or row[j - 1] == 0,
+            )
+            perimeter += sum(edges)
     return perimeter
